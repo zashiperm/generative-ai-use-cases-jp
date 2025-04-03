@@ -38,7 +38,7 @@
     "samlCognitoDomainName": "",
     "samlCognitoFederatedIdentityProviderName": "",
     "hiddenUseCases": {},
-    "modelRegion": "us-east-1",
+    "modelRegion": "us-west-2",
     "modelIds": [
       "us.anthropic.claude-3-5-sonnet-20241022-v2:0",
       "us.anthropic.claude-3-5-haiku-20241022-v1:0",
