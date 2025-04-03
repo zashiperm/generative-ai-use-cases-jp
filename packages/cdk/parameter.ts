@@ -29,7 +29,7 @@ const envs: Record<string, Partial<StackInput>> = {
     ragKnowledgeBaseAdvancedParsingModelId:
       'anthropic.claude-3-5-sonnet-20241022-v2:0',
     ragKnowledgeBaseBinaryVector: false,
-    embeddingModelId: 'amazon.titan-embed-text-v2:0',
+    embeddingModelId: 'amazon.titan-embed-text-v2:0'
   },
   staging: {
     // Parameters for staging environment
