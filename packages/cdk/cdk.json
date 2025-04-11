@@ -15,7 +15,7 @@
     ]
   },
   "context": {
-    "env": "dev",
+    "env": "prod",
     "ragEnabled": false,
     "kendraIndexArn": null,
     "kendraIndexLanguage": "ja",
@@ -24,7 +24,7 @@
     "kendraIndexScheduleCreateCron": null,
     "kendraIndexScheduleDeleteCron": null,
     "ragKnowledgeBaseEnabled": false,
-    "ragKnowledgeBaseId": "generative-ai-use-cases-jp",
+    "ragKnowledgeBaseId": "GDRFVNN7RL",
     "ragKnowledgeBaseStandbyReplicas": false,
     "ragKnowledgeBaseAdvancedParsing": false,
     "ragKnowledgeBaseAdvancedParsingModelId": "anthropic.claude-3-sonnet-20240229-v1:0",
