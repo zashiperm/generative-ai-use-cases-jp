@@ -23,7 +23,7 @@ const envs: Record<string, Partial<StackInput>> = {
   dev: {
     // Parameters for development environment
     ragKnowledgeBaseEnabled: true,
-    ragKnowledgeBaseId: null,
+    ragKnowledgeBaseId: "VDDS054I4B",
     ragKnowledgeBaseStandbyReplicas: false,
     ragKnowledgeBaseAdvancedParsing: false,
     ragKnowledgeBaseAdvancedParsingModelId:
