@@ -22,14 +22,14 @@ const envs: Record<string, Partial<StackInput>> = {
   // },
   dev: {
     // Parameters for development environment
-    ragKnowledgeBaseEnabled: true,
-    ragKnowledgeBaseId: "VDDS054I4B",
-    ragKnowledgeBaseStandbyReplicas: false,
-    ragKnowledgeBaseAdvancedParsing: false,
-    ragKnowledgeBaseAdvancedParsingModelId:
-      'anthropic.claude-3-5-sonnet-20241022-v2:0',
-    ragKnowledgeBaseBinaryVector: false,
-    embeddingModelId: 'amazon.titan-embed-text-v2:0'
+    //ragKnowledgeBaseEnabled: true,
+    //ragKnowledgeBaseId: "VDDS054I4B",
+    //ragKnowledgeBaseStandbyReplicas: false,
+    //ragKnowledgeBaseAdvancedParsing: false,
+    //ragKnowledgeBaseAdvancedParsingModelId:
+    //  'anthropic.claude-3-5-sonnet-20241022-v2:0',
+    //ragKnowledgeBaseBinaryVector: false,
+    //embeddingModelId: 'amazon.titan-embed-text-v2:0'
   },
   staging: {
     // Parameters for staging environment
