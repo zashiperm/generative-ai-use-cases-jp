@@ -21,6 +21,12 @@ const envs: Record<string, Partial<StackInput>> = {
   //   // If you want to override the default settings, add the following
   // },
   dev: {
+    "ragKnowledgeBaseEnabled": true,
+    "ragKnowledgeBaseId": "VDDS054I4B",
+    "ragKnowledgeBaseStandbyReplicas": false,
+    "ragKnowledgeBaseAdvancedParsing": true,
+    "ragKnowledgeBaseAdvancedParsingModelId": "anthropic.claude-3-5-sonnet-20241022-v2:0",
+    "ragKnowledgeBaseBinaryVector": false,
     // Parameters for development environment
     //ragKnowledgeBaseEnabled: true,
     //ragKnowledgeBaseId: "VDDS054I4B",
