@@ -27,6 +27,16 @@ const envs: Record<string, Partial<StackInput>> = {
     "ragKnowledgeBaseAdvancedParsing": true,
     "ragKnowledgeBaseAdvancedParsingModelId": "anthropic.claude-3-5-sonnet-20241022-v2:0",
     "ragKnowledgeBaseBinaryVector": false,
+    "modelRegion": "us-west-2",
+    "modelIds": [
+      "us.anthropic.claude-3-7-sonnet-20250219-v1:0",
+      "us.anthropic.claude-3-5-sonnet-20241022-v2:0",
+      "us.anthropic.claude-3-5-haiku-20241022-v1:0",
+      "us.anthropic.claude-3-7-sonnet-20250219-v1:0",
+      "us.amazon.nova-pro-v1:0",
+      "us.amazon.nova-lite-v1:0",
+      "us.amazon.nova-micro-v1:0"
+    ],
     // Parameters for development environment
     //ragKnowledgeBaseEnabled: true,
     //ragKnowledgeBaseId: "VDDS054I4B",
