@@ -40,11 +40,13 @@ export const stackInputSchema = z.object({
       ])
     )
     .default([
-      'us.anthropic.claude-3-5-sonnet-20241022-v2:0',
+      'us.anthropic.claude-3-7-sonnet-20250219-v1:0',
       'us.anthropic.claude-3-5-haiku-20241022-v1:0',
+      'us.amazon.nova-premier-v1:0',
       'us.amazon.nova-pro-v1:0',
       'us.amazon.nova-lite-v1:0',
       'us.amazon.nova-micro-v1:0',
+      'us.deepseek.r1-v1:0',
     ]),
   imageGenerationModelIds: z
     .array(
