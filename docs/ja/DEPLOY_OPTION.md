@@ -1785,10 +1785,16 @@ const envs: Record<string, Partial<StackInput>> = {
 - `GenerativeAiUseCasesStack-APIPredictService`
 - `GenerativeAiUseCasesStack-APIPredictStreamService`
 - `GenerativeAiUseCasesStack-APIGenerateImageService`
+- `GenerativeAiUseCasesStack-APIGenerateVideoService`
+- `GenerativeAiUseCasesStack-APIListVideoJobsService`
+- `GenerativeAiUseCasesStack-SpeechToSpeechTaskService`
+- `GenerativeAiUseCasesStack-RagKnowledgeBaseRetrieve` (Knowledge Base 利用時のみ)
+- `GenerativeAiUseCasesStack-APIGetFileDownloadSigned` (Knowledge Base 利用時のみ)
 
 Principal の指定方法について詳細を確認したい場合はこちらを参照ください: [AWS JSON ポリシーの要素: Principal](https://docs.aws.amazon.com/ja_jp/IAM/latest/UserGuide/reference_policies_elements_principal.html)
 
-Principal 設定例 (別アカウントにて設定)
+<details>
+  <summary>Principal 設定例 (別アカウントにて設定)</summary>
 
 ```json
 {
@@ -1801,19 +1807,76 @@ Principal 設定例 (別アカウントにて設定)
           "arn:aws:iam::111111111111:role/GenerativeAiUseCasesStack-APIPredictTitleServiceXXX-XXXXXXXXXXXX",
           "arn:aws:iam::111111111111:role/GenerativeAiUseCasesStack-APIPredictServiceXXXXXXXX-XXXXXXXXXXXX",
           "arn:aws:iam::111111111111:role/GenerativeAiUseCasesStack-APIPredictStreamServiceXX-XXXXXXXXXXXX",
-          "arn:aws:iam::111111111111:role/GenerativeAiUseCasesStack-APIGenerateImageServiceXX-XXXXXXXXXXXX"
+          "arn:aws:iam::111111111111:role/GenerativeAiUseCasesStack-APIGenerateImageServiceXX-XXXXXXXXXXXX",
+          "arn:aws:iam::111111111111:role/GenerativeAiUseCasesStack-APIGenerateVideoServiceXX-XXXXXXXXXXXX",
+          "arn:aws:iam::111111111111:role/GenerativeAiUseCasesStack-APIListVideoJobsServiceXX-XXXXXXXXXXXX",
+          "arn:aws:iam::111111111111:role/GenerativeAiUseCasesStack-SpeechToSpeechTaskService-XXXXXXXXXXXX",
+          "arn:aws:iam::111111111111:role/GenerativeAiUseCasesStack-RagKnowledgeBaseRetrieveX-XXXXXXXXXXXX",
+          "arn:aws:iam::111111111111:role/GenerativeAiUseCasesStack-APIGetFileDownloadSignedU-XXXXXXXXXXXX"
         ]
       },
-      "Action": "sts:AssumeRole",
-      "Condition": {}
+      "Action": "sts:AssumeRole"
     }
   ]
 }
 ```
 
+</details>
+
+<details>
+  <summary>ポリシー設定例 (別アカウントにて設定)</summary>
+
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "AllowBedrockInvokeModel",
+      "Effect": "Allow",
+      "Action": [
+        "bedrock:InvokeModel*",
+        "bedrock:Rerank",
+        "bedrock:GetInferenceProfile",
+        "bedrock:GetAsyncInvoke",
+        "bedrock:ListAsyncInvokes"
+      ],
+      "Resource": ["*"]
+    },
+    {
+      "Sid": "AllowS3PutObjectToVideoTempBucket",
+      "Effect": "Allow",
+      "Action": ["s3:PutObject"],
+      "Resource": ["arn:aws:s3:::<video-temp-bucket-name>/*"]
+    },
+    {
+      "Sid": "AllowBedrockRetrieveFromKnowledgeBase",
+      "Effect": "Allow",
+      "Action": ["bedrock:RetrieveAndGenerate*", "bedrock:Retrieve*"],
+      "Resource": [
+        "arn:aws:bedrock:<region>:<account-id>:knowledge-base/<knowledge-base-id>"
+      ]
+    },
+    {
+      "Sid": "AllowS3GetPresignedUrl",
+      "Effect": "Allow",
+      "Action": ["s3:GetObject*"],
+      "Resource": ["arn:aws:s3:::<knowledge-base-datasource-bucket-name>/*"]
+    }
+  ]
+}
+```
+
+</details>
+
 パラメータには以下の値を設定します。
 
 - `crossAccountBedrockRoleArn` ... 別アカウントで事前に作成した IAM ロールの ARN です
+
+Knowledge Base を利用する場合は、下記パラメーターも指定します。
+
+- `ragKnowledgeBaseEnabled` ... Knowledge Base を有効化する場合は `true` とします
+- `ragKnowledgeBaseId` ... 別アカウントに事前構築した Knowledge Base の ID です
+  - Knowledge Base は `modelRegion` に存在する必要があります
 
 **[parameter.ts](/packages/cdk/parameter.ts) を編集**
 
@@ -1823,6 +1886,8 @@ const envs: Record<string, Partial<StackInput>> = {
   dev: {
     crossAccountBedrockRoleArn:
       'arn:aws:iam::アカウントID:role/事前に作成したロール名',
+    ragKnowledgeBaseEnabled: true, // Knowledge Base を利用する場合のみ
+    ragKnowledgeBaseId: 'XXXXXXXXXX', // Knowledge Base を利用する場合のみ
   },
 };
 ```
@@ -1833,7 +1898,9 @@ const envs: Record<string, Partial<StackInput>> = {
 // cdk.json
 {
   "context": {
-    "crossAccountBedrockRoleArn": "arn:aws:iam::アカウントID:role/事前に作成したロール名"
+    "crossAccountBedrockRoleArn": "arn:aws:iam::アカウントID:role/事前に作成したロール名",
+    "ragKnowledgeBaseEnabled": true, // Knowledge Base を利用する場合のみ
+    "ragKnowledgeBaseId": "XXXXXXXXXX" // Knowledge Base を利用する場合のみ
   }
 }
 ```
